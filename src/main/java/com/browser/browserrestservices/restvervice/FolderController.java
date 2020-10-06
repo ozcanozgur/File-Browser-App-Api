@@ -8,12 +8,10 @@ import org.springframework.web.bind.annotation.RestController;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 public class FolderController {
-
-    private String absolutePath;
-    private String parentFolder;
 
     @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/api/folders")
@@ -31,8 +29,8 @@ public class FolderController {
         else{
             f = new File(name);
         }
-        parentFolder = f.getParent();
-        absolutePath = f.getAbsolutePath();
+        String parentFolder = f.getParent();
+        String absolutePath = f.getAbsolutePath();
 
         //absolutePath
         folders.add(new Folder(absolutePath,0));
@@ -41,7 +39,7 @@ public class FolderController {
 
 
         // For each pathname in the pathnames array
-        for (File file : f.listFiles()) {
+        for (File file : Objects.requireNonNull(f.listFiles())) {
 
 
             //do not add hidden files do not calculate folder sizes
